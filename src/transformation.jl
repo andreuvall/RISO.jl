@@ -6,10 +6,17 @@ function transform(x::Array{C, 2}, p::Palette) where C <: Colorant
 end
 
 function preview(x::Channelview, p::Palette)
-    size(x)[1] == length(p) || throw("The number of channels and the palette length do not match.")
+    size(x)[1] == length(p) || throw(DimensionMismatch("The number of channels and the palette length do not match."))
     mapreduce(
         (k, v) -> clamp01nan!(k) .* v,  # mapped operation
         +,  # reduction
         eachslice(x.pixels; dims = 1), p.colors
     )
+end
+
+function Images.save(filename, x::Channelview, p::Palette)
+    map(eachslice(x.pixels; dims = 1), p.names) do channel, name
+        save("$(filename)_$(name).png", clamp01nan!(1 .- channel))
+        # TODO: 1 .- channel is good for "viewing" it, but for printing? 
+    end
 end

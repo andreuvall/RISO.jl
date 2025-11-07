@@ -21,6 +21,7 @@ using Test
     end
     @testset "Palette" begin
         palette = Palette(CMY.([C, M, Y]))
+        @test palette.colors isa Vector{C} where C <: Colorant
         @test length(palette) == 3
         @test rank(palette) == 3
         @test rank(inv(palette)) == 3
@@ -59,7 +60,7 @@ using Test
         @test y.pixels isa Base.ReinterpretArray{T, 3} where T <: AbstractFloat
     end
 
-    @testset "Transformations" begin
+    @testset "Transformation" begin
         palette = Palette(CMY.([C, M, Y]))
 
         x = CMY.(float.(load("wcmyk-squares_rgb8.png")))
