@@ -33,6 +33,20 @@ using Test
         @test rank(palette) == 3
         @test rank(inv(palette)) == 3
     end
+    @testset "Named palette" begin
+        palette = Palette(CMY.([C, M, Y]), [:cy, :ma, :ye])
+        @test palette.names isa Vector{Symbol}
+        @test palette.names == [:cy, :ma, :ye]
+        @test length(palette) == 3
+        
+        palette = Palette(CMY.([C, M, Y]), ["cy", "ma", "ye"])
+        @test palette.names isa Vector{String}
+        @test palette.names == ["cy", "ma", "ye"]
+        @test length(palette) == 3
+
+        @test_throws DimensionMismatch("The number of colors and names do not match.") Palette(CMY.([C, M, Y]), [:cy, :ma])
+        @test_throws ArgumentError("The colors must be unique.") Palette(CMY.([C, M, M]))
+    end
 
     @testset "Channelview" begin
         palette = Palette(CMY.([C, M, Y]))

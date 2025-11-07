@@ -1,5 +1,16 @@
-struct Palette{C <: Colorant}
+struct Palette{C <: Colorant, T <: Union{Symbol, String}}
     colors::Vector{C}
+    names::Vector{T}
+    function Palette(colors::Vector{C}, names::Vector{T}) where {C <: Colorant, T <: Union{Symbol, String}}
+        length(unique(colors)) == length(colors) || throw(ArgumentError("The colors must be unique."))
+        length(colors) == length(names) || throw(DimensionMismatch("The number of colors and names do not match."))
+        new{C, T}(colors, names)
+    end
+end
+
+function Palette(colors::Vector{C}) where C <: Colorant
+    names = [Symbol("c$i") for i in range(1, length(colors))]
+    Palette(colors, names)
 end
 
 Base.getindex(p::Palette, i::Int) = p.colors[i]

@@ -6,10 +6,10 @@ using RISO
 
 image = CMY.(float.(load("test/wcmyk-squares_rgb8.png")))
 
-p = Palette([CMY(C), CMY(M), CMY(Y)])
+p = Palette([CMY(C), CMY(M), CMY(Y)], [:cyan, :magenta, :yellow])
 preview(p)
 
 transformed = transform(image, p)
 
 preview(transformed, p)
-save("result", transformed)
+save("result", transformed, p)
