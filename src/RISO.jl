@@ -6,7 +6,10 @@ using ColorTypes
 using LinearAlgebra
 using NonNegLeastSquares
 
-export Palette, W, C, M, Y, K
+export Palette, W, C, M, Y, K,
+    YELLOW, BLACK, FLUORESCENT_ORANGE, FLUORESCENT_PINK, 
+    BLUE, METALLIC_GOLD, GREEN, BRIGHT_READ, RISO_FEDERAL_BLUE, 
+    PURPLE, TEAL, HUNTER_GREEN, AQUA, GRAY
 export Channelview, save
 export transform, preview
 
