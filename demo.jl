@@ -12,4 +12,4 @@ preview(p)
 transformed = transform(image, p)
 
 preview(transformed, p)
-save("result", transformed, p)
+save(joinpath(".", "result"), transformed, p)

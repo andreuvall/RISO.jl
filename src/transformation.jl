@@ -14,9 +14,11 @@ function preview(x::Channelview, p::Palette)
     )
 end
 
-function Images.save(filename, x::Channelview, p::Palette)
+function Images.save(path, x::Channelview, p::Palette)
+    parent..., file = splitpath(path)
     map(eachslice(x.pixels; dims = 1), p.names) do channel, name
-        save("$(filename)_$(name).png", clamp01nan!(1 .- channel))
+        filepath = joinpath(joinpath(parent), "$(file)_$(name).png")
+        save(filepath, clamp01nan!(1 .- channel))
         # TODO: 1 .- channel is good for "viewing" it, but for printing? 
     end
 end
