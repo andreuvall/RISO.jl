@@ -64,7 +64,7 @@ Under the assumption that colors can be thought of as vector spaces, the target 
 
 Let's revisit RISO.jl's approach again alongside the example of our RISO artist ([Figure 2](#fig-separation)). The RISO artist wants to print 500 copies of an artwork. The artwork is a digital image represented in the RGB color model. RISO.jl goes ahead and re-expresses the artwork in CMY, just by the direct calculation that follows from assuming that CMY is the "opposite" of RGB. That is, for each pixel in the artwork,
 
-$$(x, y, z)_{\text{RGB}} \to (1 - x, 1 - y, 1 - z)_{\text{CMY}}.$$ 
+$$(x, y, z)_{\text{RGB}} \to (1 - x, 1 - y, 1 - z)_{\text{CMY}}.$$
 
 The artist chooses a palette of a few base colors, the actual _drums_ that the Risograph device will use. Suppose these are Riso-Federal Blue, Fluorescent Orange and Yellow. Thus, the artist provides RISO.jl with the RGB representations of the three palette colors:
 
@@ -79,7 +79,6 @@ Again, RISO.jl goes on and re-expresses these three colors in CMY:
 - Yellow: $(0, 23, 255)_{\text{CMY}}$.
 
 > [!NOTE]
->
 > **Fractional:** CMY colors are never expressed using integer components. Here, we did so just for simplicity. To be exact, if $(x, y, z)_{\text{RGB}}$ use integer components, we first make them fractional, $(\frac{x}{255}, \frac{y}{255}, \frac{z}{255})_{\text{RGB}}$, and only then convert them to $(1 - \frac{x}{255}, 1 - \frac{y}{255}, 1 - \frac{z}{255})_{\text{CMY}} = (\frac{255 - x}{255}, \frac{255 - y}{255}, \frac{255 - z}{255})_{\text{CMY}}$. The numerators in the last expression are the integers we wrote above to concisely express the palette in the CMY color model.
 
 Now, RISO.jl has the input image and the target palette expressed in CMY. Importantly, the latter can be understood as a change-of-basis matrix. That is, a matrix containing the coordinates of the target basis vectors (the palette) expressed using the source basis (CMY). With it, RISO.jl approximates the coordinates of the input image in terms of the target palette, and stores them into three grayscale images, one for each color in the target palette. RISO.jl's job is done, and the artist can move on to printing.
@@ -104,12 +103,44 @@ Now, RISO.jl has the input image and the target palette expressed in CMY. Import
 
 ## Usage
 
-The process described above reads a bit idealized. RISO.jl does not actually automate the process. RISO.jl is a Julia package that implements tools for preparing RISO prints, and users are free to experiment with these tools. The user needs to install [Julia](https://julialang.org/) and then the RISO.jl package, ideally in a dedicated [Julia environment](https://docs.julialang.org/en/v1/manual/code-loading/#Environments). Installing RISO.jl should bring in other required dependencies, mostly Julia packages to work with images and colors.
+The process described above reads a bit idealized. RISO.jl does not actually automate the process. RISO.jl is a Julia package that implements tools for preparing RISO prints, and users are free to experiment with these tools.
 
 > [!WARNING]
-> At the moment, setting this up is not easy. The reason is that RISO.jl relies on [Colors.jl](https://github.com/JuliaGraphics/Colors.jl), [ColorTypes.jl](https://github.com/JuliaGraphics/ColorTypes.jl) and [ColorVectorSpace.jl](https://github.com/JuliaGraphics/ColorVectorSpace.jl), but with the changes filed in PRs [#574](https://github.com/JuliaGraphics/Colors.jl/pull/574), [#326](https://github.com/JuliaGraphics/ColorTypes.jl/pull/326) and [#198](https://github.com/JuliaGraphics/ColorVectorSpace.jl/pull/198), respectively, which are still drafts. It is unclear how RISO.jl will end up getting the tools it needs.
+> RISO.jl is not registered yet. It relies on [Colors.jl](https://github.com/JuliaGraphics/Colors.jl), [ColorTypes.jl](https://github.com/JuliaGraphics/ColorTypes.jl) and [ColorVectorSpace.jl](https://github.com/JuliaGraphics/ColorVectorSpace.jl), but with the changes filed in PRs [#574](https://github.com/JuliaGraphics/Colors.jl/pull/574), [#326](https://github.com/JuliaGraphics/ColorTypes.jl/pull/326) and [#198](https://github.com/JuliaGraphics/ColorVectorSpace.jl/pull/198), respectively, which are still drafts. It is unclear how RISO.jl will end up getting the tools it needs. In the meantime, adding RISO.jl to another project with `Pkg.add` will not work.
 
-Assuming the environment is set up, the process described above could look like this:
+The `Project.toml` of this repository points to the changes from the PRs above, so cloning it is the way to try RISO.jl for now. The setup requires [Julia](https://julialang.org/) 1.11 or later.
+
+### Setup (only once)
+
+In a terminal, clone the repository, navigate into the directory and start Julia with the dedicated environment:
+
+```bash
+git clone https://github.com/andreuvall/RISO.jl
+cd RISO.jl
+julia --project=.
+```
+
+Once in the Julia REPL, instantiate the project:
+
+```julia
+using Pkg
+Pkg.instantiate()
+```
+
+This installs the dependencies. The first run of `Pkg.instantiate()` downloads and precompiles several packages, so it can take a few minutes. Afterwards, the Julia environment is set up and ready to be used.
+
+### Starting Julia later
+
+The environment stays set up. In a new terminal, navigate into the project directory and start Julia with the same environment:
+
+```bash
+cd RISO.jl
+julia --project=.
+```
+
+### Example
+
+With the Julia environment set up and the Julia REPL started, the process described above could look like this:
 
 ```julia
 # load the required packages
