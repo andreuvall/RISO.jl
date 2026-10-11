@@ -52,7 +52,7 @@ using Test
     @testset "Channelview" begin
         palette = Palette(CMY.([C, M, Y]))
 
-        x = CMY.(float.(load("wcmyk-squares_rgb8.png")))
+        x = CMY.(float.(load("wcmyk-squares-rgb8.png")))
         @test x isa Array{C, 2} where C <: Colorant
 
         y = Channelview(x)
@@ -63,7 +63,7 @@ using Test
     @testset "Transformation" begin
         palette = Palette(CMY.([C, M, Y]))
 
-        x = CMY.(float.(load("wcmyk-squares_rgb8.png")))
+        x = CMY.(float.(load("wcmyk-squares-rgb8.png")))
         y = transform(x, palette)
         @test y isa Channelview{T} where T <: AbstractFloat
         @test y.pixels isa Array{T, 3} where T <: AbstractFloat
