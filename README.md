@@ -50,7 +50,7 @@ RISO.jl works on the latter and in a very restricted way:
 RISO.jl further makes an important assumption. It accepts the [CMY](https://en.wikipedia.org/wiki/CMYK_color_model#Comparison_to_CMY) color model ([subtractive](https://en.wikipedia.org/wiki/Subtractive_color)) as the "opposite" of RGB ([additive](https://en.wikipedia.org/wiki/Additive_color)). Indeed, the first thing RISO.jl does is converting the input image and the target palette from RGB into CMY. The reason for that is that the goal is to prepare prints, and prints are on paper. It is crucial to have white as the origin of the color model.
 
 > [!NOTE]
-> **The RGB-CMY cube:** We accept that colors in the RGB color model can be expressed using fractional values. That is, $(255, 0, 0)_{\text{RGB}}$ and $(1, 0, 0)_{\text{RGB}}$ are equivalent representations for red. Now, accepting CMY to be the "opposite" of RGB means accepting that an arbitrary color in RGB fractional coordinates $(x, y, z)_{\text{RGB}}$ can be expressed equivalently in the CMY coordinates $(1 - x, 1 - y, 1 - z)_{\text{CMY}}$.
+> **The RGB-CMY cube:** We accept that colors in the RGB color model can be expressed using fractional values. That is, $`(255, 0, 0)_{\text{RGB}}`$ and $`(1, 0, 0)_{\text{RGB}}`$ are equivalent representations for red. Now, accepting CMY to be the "opposite" of RGB means accepting that an arbitrary color in RGB fractional coordinates $`(x, y, z)_{\text{RGB}}`$ can be expressed equivalently in the CMY coordinates $`(1 - x, 1 - y, 1 - z)_{\text{CMY}}`$.
 >
 > <figure>
 >    <a name="fig-rgb-and-cmy"></a>
@@ -80,7 +80,7 @@ Again, RISO.jl goes on and re-expresses these three colors in CMY:
 - Yellow: $(0, 23, 255)_{\text{CMY}}$.
 
 > [!NOTE]
-> **Fractional:** CMY colors are never expressed using integer components. Here, we did so just for simplicity. To be exact, if $(x, y, z)_{\text{RGB}}$ use integer components, we first make them fractional, $(\frac{x}{255}, \frac{y}{255}, \frac{z}{255})_{\text{RGB}}$, and only then convert them to $(1 - \frac{x}{255}, 1 - \frac{y}{255}, 1 - \frac{z}{255})_{\text{CMY}} = (\frac{255 - x}{255}, \frac{255 - y}{255}, \frac{255 - z}{255})_{\text{CMY}}$. The numerators in the last expression are the integers we wrote above to concisely express the palette in the CMY color model.
+> **Fractional:** CMY colors are never expressed using integer components. Here, we did so just for simplicity. To be exact, if $`(x, y, z)_{\text{RGB}}`$ use integer components, we first make them fractional, $`(\frac{x}{255}, \frac{y}{255}, \frac{z}{255})_{\text{RGB}}`$, and only then convert them to $`(1 - \frac{x}{255}, 1 - \frac{y}{255}, 1 - \frac{z}{255})_{\text{CMY}} = (\frac{255 - x}{255}, \frac{255 - y}{255}, \frac{255 - z}{255})_{\text{CMY}}`$. The numerators in the last expression are the integers we wrote above to concisely express the palette in the CMY color model.
 
 Now, RISO.jl has the input image and the target palette expressed in CMY. Importantly, the latter can be understood as a change-of-basis matrix. That is, a matrix containing the coordinates of the target basis vectors (the palette) expressed using the source basis (CMY). With it, RISO.jl approximates the coordinates of the input image in terms of the target palette, and stores them into three grayscale images, one for each color in the target palette. RISO.jl's job is done, and the artist can move on to printing.
 
