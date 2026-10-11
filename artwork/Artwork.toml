@@ -1,0 +1,25 @@
+# ARTWORK MANIFEST AND LICENSES
+# Artwork is documentation material. It is not part of the program and is
+# not covered by the software license. See ../LICENSING.md for details.
+
+[category_a_original_artwork]
+license = "CC BY-NC-SA 4.0 (Attribution-NonCommercial-ShareAlike)"
+license_url = "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+copyright = "Copyright © 2026 Andreu Vall"
+notes = "This artwork is a fully original creation. You may share and adapt it provided you give credit, do not use it commercially, and distribute adaptations under the same license."
+files = [
+    "rgb-and-cmy.png",
+]
+
+[category_b_composite_artwork]
+license = "All Rights Reserved (© 2026 Andreu Vall), applying only to the adapter's layout, compilation, modifications and additions. Each third-party component remains under its own license, listed below."
+notes = "These composites incorporate third-party components with their own license terms. They are included in this repository only as part of a complete copy of it, and may not be extracted, cropped or reused separately from the repository. Components must be sourced from their original creators under their respective terms."
+files = [
+    "workflow.png",
+    "separation.png",
+]
+underlying_components = [
+    "Dog at computer by Konrad Förstner on Flickr, CC BY 2.0 (https://creativecommons.org/licenses/by/2.0/): https://www.flickr.com/photos/konradfoerstner/4634880593",
+    "Wall paint by @fatihwashere on Unsplash, Unsplash License (https://unsplash.com/license): https://unsplash.com/photos/brick-wall-with-colorful-geometric-shapes-kgqu_qs3B78",
+    "GR3770 printer by Potato Publishing, used with the author's permission: https://potatopublishing.at",
+]
