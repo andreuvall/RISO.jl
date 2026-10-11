@@ -18,7 +18,10 @@ function Base.setindex!(p::Palette{C}, c::C, i::Int) where C <: Colorant
     p.colors[i] = c
     return p
 end
+Base.iterate(p::Palette, state...) = iterate(p.colors, state...)
 Base.length(p::Palette) = length(p.colors)
+Base.map(f, p::Palette) = Palette(map(f, p.colors), p.names)
+
 Images.channelview(p::Palette) = channelview(p.colors)
 LinearAlgebra.rank(p::Palette) = rank(channelview(p))
 
