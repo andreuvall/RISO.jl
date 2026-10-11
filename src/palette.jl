@@ -26,6 +26,10 @@ function LinearAlgebra.inv(p::Palette{C}) where C <: Colorant
     m = channelview(p)
     m⁻¹ = if rank(m) == length(C) && length(p) <= 3
         @info "The associated matrix is invertible." 
+        if isdiag(m)
+            @info "The associated matrix is diagonal."
+            m = collect(m)
+        end
         inv(m)
     else
         @info "The associated matrix is not invertible. Pseudoinversion will be attempted."
