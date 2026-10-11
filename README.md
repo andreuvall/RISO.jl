@@ -55,6 +55,7 @@ RISO.jl further makes an important assumption. It accepts the [CMY](https://en.w
 > <figure>
 >    <a name="fig-rgb-and-cmy"></a>
 >    <img src="artwork/rgb-and-cmy.png" alt="The RGB-CMY cube." width="600">
+>    <br>
 >    <figcaption>
 >        <i>Artwork © 2026 Andreu Vall, <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></i>
 >    </figcaption>
